@@ -7,7 +7,7 @@ import { z } from "zod";
 import { FileDropzone } from "./FileDropzone";
 import { CategorySelect } from "./CategorySelect";
 import { CATEGORIES } from "@/lib/constants/categories";
-import { AlertCircle, CheckCircle2, Copy, AlertTriangle, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, Copy, AlertTriangle, X, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Client-side schema (excludes coverArtUrl/photoUrl since those are server-side URLs)
@@ -401,11 +401,19 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
             description="JPG or PNG, max 5MB (Square 1:1 format)"
             onChange={(file) => setCoverArt(file)}
           />
-          <FileDropzone
-            label="Bold Front-View Photo *"
-            description="JPG or PNG, max 5MB (Portrait 3:4 format)"
-            onChange={(file) => setPhoto(file)}
-          />
+          <div className="flex flex-col gap-2">
+            <FileDropzone
+              label="Bold Front-View Photo *"
+              description="JPG or PNG, max 5MB (Portrait 3:4 format)"
+              onChange={(file) => setPhoto(file)}
+            />
+            <div className="flex items-start gap-2 p-2.5 rounded bg-brand-gold/10 border border-brand-gold/25 text-brand-gold text-left">
+              <Camera className="w-4 h-4 shrink-0 mt-0.5" />
+              <p className="font-sans text-[11px] leading-relaxed text-brand-white/80">
+                <strong className="text-brand-gold">Voting Profile Photo:</strong> This photo will be visible to voters on the live voting portal. Ensure it is clear, high-quality, and easily recognizable by your fans.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Social Media Handles */}
