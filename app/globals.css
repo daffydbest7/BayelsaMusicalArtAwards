@@ -1,26 +1,197 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-heading: var(--font-space-grotesk);
+
+  /* Brand Colors */
+  --color-brand-bg: var(--brand-bg-base);
+  --color-brand-gold: var(--brand-gold-primary);
+  --color-brand-bronze: var(--brand-bronze-accent);
+  --color-brand-brown-deep: var(--brand-brown-deep);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-white: var(--brand-white);
+
+  --color-brand-status-pending: var(--brand-status-pending);
+  --color-brand-status-approved: var(--brand-status-approved);
+  --color-brand-status-rejected: var(--brand-status-rejected);
+  --color-brand-status-live: var(--brand-status-live);
+
+  /* Font Families */
+  --font-space-grotesk: var(--font-space-grotesk);
+  --font-inter: var(--font-inter);
+  --font-jetbrains-mono: var(--font-jetbrains-mono);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Brand colors from DESIGN.md */
+  --brand-bg-base: #110804;
+  --brand-gold-primary: #d2942e;
+  --brand-bronze-accent: #904206;
+  --brand-brown-deep: #6c3c0a;
+  --brand-surface: #1a120c;
+  --brand-white: #F5F1EB;
+
+  --brand-status-pending: #C9A227;
+  --brand-status-approved: #3F9142;
+  --brand-status-rejected: #B3412F;
+  --brand-status-live: #2E8FA3;
+
+  /* Theme overrides - The entire app is dark by default */
+  --background: var(--brand-bg-base);
+  --foreground: var(--brand-white);
+  --card: var(--brand-surface);
+  --card-foreground: var(--brand-white);
+  --popover: var(--brand-surface);
+  --popover-foreground: var(--brand-white);
+  --primary: var(--brand-gold-primary);
+  --primary-foreground: var(--brand-bg-base);
+  --secondary: var(--brand-bronze-accent);
+  --secondary-foreground: var(--brand-white);
+  --muted: var(--brand-surface);
+  --muted-foreground: #a19a95;
+  --accent: var(--brand-bronze-accent);
+  --accent-foreground: var(--brand-white);
+  --destructive: var(--brand-status-rejected);
+  --destructive-foreground: var(--brand-white);
+  --border: var(--brand-brown-deep);
+  --input: var(--brand-brown-deep);
+  --ring: var(--brand-gold-primary);
+  --radius: 0.375rem;
+
+  /* Sidebar variables */
+  --sidebar: var(--brand-surface);
+  --sidebar-foreground: var(--brand-white);
+  --sidebar-primary: var(--brand-gold-primary);
+  --sidebar-primary-foreground: var(--brand-bg-base);
+  --sidebar-accent: var(--brand-bronze-accent);
+  --sidebar-accent-foreground: var(--brand-white);
+  --sidebar-border: var(--brand-brown-deep);
+  --sidebar-ring: var(--brand-gold-primary);
+
+  /* Charts */
+  --chart-1: var(--brand-gold-primary);
+  --chart-2: var(--brand-bronze-accent);
+  --chart-3: var(--brand-status-live);
+  --chart-4: var(--brand-status-approved);
+  --chart-5: var(--brand-status-pending);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground min-h-screen selection:bg-brand-gold selection:text-brand-bg;
+    background-color: var(--brand-bg-base);
+    background-image: 
+      radial-gradient(circle at 15% 20%, rgba(144, 66, 6, 0.22) 0%, transparent 60%),
+      radial-gradient(circle at 85% 75%, rgba(210, 148, 46, 0.12) 0%, transparent 60%),
+      linear-gradient(135deg, #110804 0%, #1c0e07 35%, #2a190f 70%, #110804 100%),
+      linear-gradient(rgba(108, 60, 10, 0.035) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(108, 60, 10, 0.035) 1.5px, transparent 1.5px);
+    background-size: 100% 100%, 100% 100%, 300% 300%, 32px 32px, 32px 32px;
+    animation: gradientBG 20s ease infinite;
+    color: var(--brand-white);
+  }
+  html {
+    @apply font-sans scroll-smooth;
+    scroll-padding-top: 80px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom premium glows and utility styles */
+.glow-gold {
+  box-shadow: 0 0 24px -4px rgba(210, 148, 46, 0.45);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.glow-gold-hover:hover {
+  box-shadow: 0 0 24px -4px rgba(210, 148, 46, 0.45);
+}
+
+.glow-gold-focus:focus-visible {
+  box-shadow: 0 0 24px -4px rgba(210, 148, 46, 0.45);
+  outline: 2px solid var(--brand-gold-primary);
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fade-in animation for success banners */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
 }
