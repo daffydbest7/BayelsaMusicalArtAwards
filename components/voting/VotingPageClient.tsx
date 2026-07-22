@@ -7,6 +7,7 @@ import { Countdown } from "@/components/site/Countdown";
 import { VoteModal } from "@/components/voting/VoteModal";
 import type { PublicNominee } from "@/app/(public)/voting/page";
 import { checkBrowserGate, BrowserGateResult } from "@/lib/browser-gate";
+import { Footer } from "@/components/site/Footer";
 
 interface CategorySection {
   name: string;
@@ -372,16 +373,7 @@ export function VotingPageClient({
       )}
 
       {/* Footer */}
-      <footer className="py-10 text-center border-t border-brand-brown-deep/20 bg-brand-surface/20">
-        <div className="flex flex-col gap-3">
-          <p className="font-heading text-sm text-brand-gold font-bold tracking-widest">
-            #BMAA2026 #BEYONDTHEPLAINS
-          </p>
-          <p className="font-sans text-xs text-brand-white/40">
-            © 2026 Bayelsa Musical Artiste Awards. All rights reserved. Follow us on Socials @BMAAOfficial.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

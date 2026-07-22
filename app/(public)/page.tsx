@@ -6,6 +6,7 @@ import { Eligibility } from "@/components/site/Eligibility";
 import { CategoryList } from "@/components/site/CategoryList";
 import { EntryForm } from "@/components/site/EntryForm";
 import { StatusTracker } from "@/components/site/StatusTracker";
+import { Footer } from "@/components/site/Footer";
 
 export default async function PublicHomePage() {
   const settings = await getCachedSettings();
@@ -45,16 +46,7 @@ export default async function PublicHomePage() {
       <StatusTracker />
 
       {/* Footer */}
-      <footer className="py-10 text-center border-t border-brand-brown-deep/20 bg-brand-surface/20">
-        <div className="flex flex-col gap-3">
-          <p className="font-heading text-sm text-brand-gold font-bold tracking-widest">
-            #BMAA2026 #BEYONDTHEPLAINS
-          </p>
-          <p className="font-sans text-xs text-brand-white/40">
-            © 2026 Bayelsa Musical Artiste Awards. All rights reserved. Follow us on Socials @BMAAOfficial.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
