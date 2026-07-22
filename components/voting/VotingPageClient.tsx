@@ -8,6 +8,7 @@ import { VoteModal } from "@/components/voting/VoteModal";
 import type { PublicNominee } from "@/app/(public)/voting/page";
 import { checkBrowserGate, BrowserGateResult } from "@/lib/browser-gate";
 import { Footer } from "@/components/site/Footer";
+import { ScrollToTop } from "@/components/site/ScrollToTop";
 
 interface CategorySection {
   name: string;
@@ -374,6 +375,9 @@ export function VotingPageClient({
 
       {/* Footer */}
       <Footer />
+
+      {/* Scroll To Top floating trigger */}
+      <ScrollToTop />
     </>
   );
 }

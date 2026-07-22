@@ -7,6 +7,7 @@ import { CategoryList } from "@/components/site/CategoryList";
 import { EntryForm } from "@/components/site/EntryForm";
 import { StatusTracker } from "@/components/site/StatusTracker";
 import { Footer } from "@/components/site/Footer";
+import { ScrollToTop } from "@/components/site/ScrollToTop";
 
 export default async function PublicHomePage() {
   const settings = await getCachedSettings();
@@ -47,6 +48,9 @@ export default async function PublicHomePage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Scroll To Top floating trigger */}
+      <ScrollToTop />
     </div>
   );
 }
