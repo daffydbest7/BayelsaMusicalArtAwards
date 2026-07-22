@@ -25,8 +25,8 @@ interface BotCheckWidgetProps {
   onVerify: (data: BotCheckData) => void;
 }
 
-// Read the provider at module level (NEXT_PUBLIC_ prefix so it's available client-side)
-const PROVIDER = process.env.NEXT_PUBLIC_BOT_VERIFY_PROVIDER || "none";
+// Read the provider (supports both NEXT_PUBLIC_BOT_VERIFY_PROVIDER and BOT_VERIFY_PROVIDER)
+const PROVIDER = process.env.NEXT_PUBLIC_BOT_VERIFY_PROVIDER || process.env.BOT_VERIFY_PROVIDER || "none";
 
 export function BotCheckWidget({ onVerify }: BotCheckWidgetProps) {
   const [honeypot, setHoneypot] = useState("");
