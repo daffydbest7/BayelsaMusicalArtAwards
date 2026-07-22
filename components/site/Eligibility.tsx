@@ -1,22 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import { motion, Variants } from "framer-motion";
+import { Radio, CalendarDays, ShieldCheck } from "lucide-react";
 
 export function Eligibility() {
   const criteria = [
     {
-      image: "/eligibility-materials.png",
+      icon: Radio,
       title: "Eligible Materials",
       description: "Music must be publicly available on digital platforms, radio, or TV.",
     },
     {
-      image: "/eligibility-period.png",
+      icon: CalendarDays,
       title: "Eligibility Period",
       description: "Release date must fall between Dec 27, 2021 and Apr 27, 2026.",
     },
     {
-      image: "/eligibility-rights.png",
+      icon: ShieldCheck,
       title: "Rights Ownership",
       description: "Artistes must own or have legal rights to all submitted recordings.",
     },
@@ -68,40 +68,36 @@ export function Eligibility() {
         viewport={{ once: true, margin: "-50px" }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       >
-        {criteria.map((item, idx) => (
-          <motion.div
-            key={idx}
-            variants={cardVariants}
-            whileHover={{ 
-              y: -5,
-              borderColor: "rgba(210, 148, 46, 0.6)",
-              boxShadow: "0 0 24px -4px rgba(210, 148, 46, 0.2)"
-            }}
-            className="flex flex-col rounded-md overflow-hidden bg-brand-surface border border-brand-brown-deep shadow-lg shadow-black/50 transition-all duration-300 group cursor-default"
-          >
-            {/* Visual illustration image container */}
-            <div className="relative h-44 sm:h-48 w-full border-b border-brand-brown-deep/40 overflow-hidden bg-brand-bg">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-surface to-transparent opacity-60" />
-            </div>
+        {criteria.map((item, idx) => {
+          const IconComponent = item.icon;
+          return (
+            <motion.div
+              key={idx}
+              variants={cardVariants}
+              whileHover={{ 
+                y: -5,
+                borderColor: "rgba(210, 148, 46, 0.6)",
+                boxShadow: "0 0 24px -4px rgba(210, 148, 46, 0.2)"
+              }}
+              className="flex flex-col items-center text-center p-8 rounded-md bg-brand-surface border border-brand-brown-deep shadow-lg shadow-black/50 transition-all duration-300 group cursor-default"
+            >
+              {/* Premium Metallic Icon Container */}
+              <div className="w-16 h-16 rounded-full bg-gradient-to-b from-brand-gold/20 to-brand-brown-deep/40 border border-brand-gold/40 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-brand-gold transition-all duration-300 shadow-inner shrink-0">
+                <IconComponent className="w-8 h-8 text-brand-gold group-hover:text-brand-white transition-colors duration-300" />
+              </div>
 
-            {/* Content card body */}
-            <div className="p-6 flex flex-col text-left gap-2">
-              <h3 className="font-heading text-lg font-bold text-brand-gold group-hover:text-brand-white transition-colors duration-300">
-                {item.title}
-              </h3>
-              <p className="font-sans text-xs sm:text-sm text-brand-white/70 leading-relaxed font-medium">
-                {item.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+              {/* Content card body */}
+              <div className="flex flex-col gap-2">
+                <h3 className="font-heading text-lg font-bold text-brand-gold group-hover:text-brand-white transition-colors duration-300">
+                  {item.title}
+                </h3>
+                <p className="font-sans text-xs sm:text-sm text-brand-white/70 leading-relaxed font-medium">
+                  {item.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
     </section>
   );

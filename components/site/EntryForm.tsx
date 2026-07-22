@@ -7,7 +7,7 @@ import { z } from "zod";
 import { FileDropzone } from "./FileDropzone";
 import { CategorySelect } from "./CategorySelect";
 import { CATEGORIES } from "@/lib/constants/categories";
-import { AlertCircle, CheckCircle2, Copy, AlertTriangle } from "lucide-react";
+import { AlertCircle, CheckCircle2, Copy, AlertTriangle, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Client-side schema (excludes coverArtUrl/photoUrl since those are server-side URLs)
@@ -57,6 +57,7 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
     watch,
     control,
     trigger,
+    reset,
     formState: { errors },
   } = useForm<EntryFormValues>({
     resolver: zodResolver(entryFormSchema),
@@ -175,11 +176,28 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
     );
   }
 
+  const handleResetForm = () => {
+    setSuccessData(null);
+    reset();
+    setCoverArt(null);
+    setPhoto(null);
+  };
+
   // ── Success state ─────────────────────────────────────────────
   if (successData) {
     return (
       <section className="py-16 px-4 max-w-xl mx-auto text-center">
-        <div className="p-8 rounded-md bg-brand-surface border border-brand-brown-deep shadow-black/40 flex flex-col items-center gap-6">
+        <div className="relative p-8 rounded-md bg-brand-surface border border-brand-brown-deep shadow-black/40 flex flex-col items-center gap-6">
+          {/* X Close / Cancel Button */}
+          <button
+            type="button"
+            onClick={handleResetForm}
+            aria-label="Close success message and return to form"
+            className="absolute top-3.5 right-3.5 p-1.5 rounded-full text-brand-white/40 hover:text-brand-gold hover:bg-brand-brown-deep/40 transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
           <CheckCircle2 className="w-16 h-16 text-brand-status-approved" />
           <h2 className="font-heading text-2xl font-bold text-brand-gold uppercase">Submission Success!</h2>
           <p className="font-sans text-brand-white/80 text-sm leading-relaxed">
@@ -192,7 +210,7 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
             </span>
             <button
               onClick={handleCopy}
-              className="p-2 rounded bg-brand-surface hover:bg-brand-brown-deep/30 text-brand-white/80 transition-colors"
+              className="p-2 rounded bg-brand-surface hover:bg-brand-brown-deep/30 text-brand-white/80 transition-colors cursor-pointer"
             >
               {copied ? (
                 <span className="font-sans text-xs text-brand-status-approved font-semibold">Copied!</span>
@@ -205,6 +223,14 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
           <p className="font-sans text-[11px] text-brand-white/40">
             A confirmation email was sent to {watchedEmail}. If you have questions, reach support at bayelsamusiccontent@gmail.com.
           </p>
+
+          <button
+            type="button"
+            onClick={handleResetForm}
+            className="mt-2 px-6 py-2.5 bg-brand-surface hover:bg-brand-brown-deep/40 border border-brand-brown-deep text-brand-gold font-heading text-xs font-bold uppercase tracking-wider rounded cursor-pointer transition-colors"
+          >
+            Submit Another Entry
+          </button>
         </div>
       </section>
     );

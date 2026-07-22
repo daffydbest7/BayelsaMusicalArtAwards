@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Search, Loader2, AlertCircle, HelpCircle } from "lucide-react";
+import { Search, Loader2, AlertCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TrackedSubmission {
@@ -138,9 +138,9 @@ export function StatusTracker() {
             <button 
               type="button" 
               onClick={() => setErrorMsg(null)}
-              className="text-brand-status-rejected hover:text-brand-white transition-colors"
+              className="text-brand-status-rejected hover:text-brand-white transition-colors cursor-pointer p-0.5"
             >
-              <HelpCircle className="w-4 h-4 rotate-45" />
+              <X className="w-4 h-4" />
             </button>
           </motion.div>
         )}
@@ -157,10 +157,10 @@ export function StatusTracker() {
             <button
               type="button"
               onClick={() => setSubmission(null)}
-              className="absolute top-3 right-3 p-1 rounded-full hover:bg-brand-brown-deep/20 text-brand-white/40 hover:text-brand-white transition-all cursor-pointer"
+              className="absolute top-3 right-3 p-1 rounded-full hover:bg-brand-brown-deep/30 text-brand-white/40 hover:text-brand-gold transition-all cursor-pointer"
               aria-label="Close status"
             >
-              <HelpCircle className="w-4 h-4 rotate-45" />
+              <X className="w-4 h-4" />
             </button>
 
             <div className="flex justify-between items-start gap-8 pr-6">
