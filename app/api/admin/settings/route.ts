@@ -1,4 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/auth/roles";
 import { Database } from "@/types/supabase";
@@ -113,6 +114,14 @@ export async function PATCH(request: NextRequest) {
         { success: false, error: "Failed to update settings." },
         { status: 500 }
       );
+    }
+
+    // Purge cached public pages so date updates take effect immediately
+    try {
+      revalidatePath("/", "page");
+      revalidatePath("/voting", "page");
+    } catch (e) {
+      console.error("Failed to revalidate paths:", e);
     }
 
     return NextResponse.json({ success: true });

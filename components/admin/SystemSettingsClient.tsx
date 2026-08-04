@@ -115,25 +115,25 @@ export function SystemSettingsClient({ initialSettings }: SystemSettingsClientPr
     const w: string[] = [];
 
     if (submissionOpen && submissionClose) {
-      const open = new Date(submissionOpen).getTime();
-      const close = new Date(submissionClose).getTime();
-      if (open >= close) {
+      const subOpenIso = fromDatetimeLocalUTC(submissionOpen);
+      const subCloseIso = fromDatetimeLocalUTC(submissionClose);
+      if (subOpenIso && subCloseIso && new Date(subOpenIso).getTime() >= new Date(subCloseIso).getTime()) {
         w.push("Submission open date must be before close date.");
       }
     }
 
     if (votingOpen && votingClose) {
-      const open = new Date(votingOpen).getTime();
-      const close = new Date(votingClose).getTime();
-      if (open >= close) {
+      const voteOpenIso = fromDatetimeLocalUTC(votingOpen);
+      const voteCloseIso = fromDatetimeLocalUTC(votingClose);
+      if (voteOpenIso && voteCloseIso && new Date(voteOpenIso).getTime() >= new Date(voteCloseIso).getTime()) {
         w.push("Voting open date must be before close date.");
       }
     }
 
     if (submissionClose && votingOpen) {
-      const subClose = new Date(submissionClose).getTime();
-      const voteOpen = new Date(votingOpen).getTime();
-      if (voteOpen < subClose) {
+      const subCloseIso = fromDatetimeLocalUTC(submissionClose);
+      const voteOpenIso = fromDatetimeLocalUTC(votingOpen);
+      if (subCloseIso && voteOpenIso && new Date(voteOpenIso).getTime() < new Date(subCloseIso).getTime()) {
         w.push("Voting window overlaps with submission window — is this intentional?");
       }
     }

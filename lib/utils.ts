@@ -8,9 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 export function formatDate(dateStr: string | Date): string {
   const d = typeof dateStr === "string" ? new Date(dateStr) : dateStr;
   if (isNaN(d.getTime())) return "";
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
+  const yyyy = d.getUTCFullYear();
+  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(d.getUTCDate()).padStart(2, "0");
   return `${dd}/${mm}/${yyyy}`;
 }
 
@@ -21,8 +21,8 @@ export function formatDateLong(dateStr: string | Date): string {
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-  const day = d.getDate();
-  const month = months[d.getMonth()];
-  const year = d.getFullYear();
+  const day = d.getUTCDate();
+  const month = months[d.getUTCMonth()];
+  const year = d.getUTCFullYear();
   return `${month} ${day}, ${year}`;
 }

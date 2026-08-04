@@ -92,9 +92,9 @@ export function Header() {
           ))}
           <Link
             href="/voting"
-            className="flex items-center gap-2 px-5 py-2 rounded bg-brand-gold text-brand-bg font-heading text-xs font-bold uppercase tracking-wider glow-gold-hover hover:glow-gold transition-all duration-300"
+            className="hidden flex items-center gap-2 px-5 py-2 rounded bg-brand-gold text-brand-bg font-heading text-xs font-bold uppercase tracking-wider glow-gold-hover hover:glow-gold transition-all duration-300"
           >
-            <Vote className="w-3.5 h-3.5" />
+            <Vote className="w-3.5 h-3.5 " />
             Vote Now
           </Link>
         </nav>
@@ -132,7 +132,7 @@ export function Header() {
               <Link
                 href="/voting"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 mt-2 rounded bg-brand-gold text-brand-bg font-heading text-sm font-bold uppercase tracking-wider"
+                className="hidden flex items-center justify-center gap-2 w-full py-3 mt-2 rounded bg-brand-gold text-brand-bg font-heading text-sm font-bold uppercase tracking-wider"
               >
                 <Vote className="w-4 h-4" />
                 Vote Now

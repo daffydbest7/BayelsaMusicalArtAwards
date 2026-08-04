@@ -9,6 +9,8 @@ import { StatusTracker } from "@/components/site/StatusTracker";
 import { Footer } from "@/components/site/Footer";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 
+export const dynamic = "force-dynamic";
+
 export default async function PublicHomePage() {
   const settings = await getCachedSettings();
 

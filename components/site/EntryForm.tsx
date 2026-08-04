@@ -9,6 +9,7 @@ import { CategorySelect } from "./CategorySelect";
 import { CATEGORIES } from "@/lib/constants/categories";
 import { AlertCircle, CheckCircle2, Copy, AlertTriangle, X, Camera } from "lucide-react";
 import { motion } from "framer-motion";
+import { formatDateLong } from "@/lib/utils";
 
 // Client-side schema (excludes coverArtUrl/photoUrl since those are server-side URLs)
 const entryFormSchema = z.object({
@@ -154,15 +155,30 @@ export function EntryForm({ submissionOpenAt, submissionCloseAt }: EntryFormProp
     }
   };
 
-  const isWindowClosed = () => {
-    const now = new Date();
-    const closeTime = new Date(submissionCloseAt);
-    const openTime = new Date(submissionOpenAt);
-    return now < openTime || now > closeTime;
-  };
+  const now = new Date();
+  const openTime = new Date(submissionOpenAt);
+  const closeTime = new Date(submissionCloseAt);
+
+  // ── Upcoming state (Not yet open) ─────────────────────────────
+  if (now < openTime) {
+    return (
+      <section id="entry-form" className="py-16 px-4 max-w-xl mx-auto text-center">
+        <div className="p-6 rounded-md bg-brand-surface border border-brand-brown-deep shadow-black/40">
+          <AlertCircle className="w-12 h-12 text-brand-gold mx-auto mb-4 animate-pulse" />
+          <h2 className="font-heading text-2xl font-bold text-brand-gold uppercase">Submissions Opening Soon</h2>
+          <p className="font-sans text-brand-white/70 text-sm mt-3 leading-relaxed">
+            The entry submission window is not yet open. Submissions will open on{" "}
+            <span className="text-brand-gold font-semibold">
+              {formatDateLong(submissionOpenAt)}
+            </span>.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   // ── Closed state ──────────────────────────────────────────────
-  if (isWindowClosed()) {
+  if (now > closeTime) {
     return (
       <section id="entry-form" className="py-16 px-4 max-w-xl mx-auto text-center">
         <div className="p-6 rounded-md bg-brand-surface border border-brand-brown-deep shadow-black/40">
