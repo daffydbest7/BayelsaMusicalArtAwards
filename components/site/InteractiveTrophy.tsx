@@ -106,7 +106,7 @@ export function InteractiveTrophy() {
             style={{ transform: "translateZ(20px)" }}
           >
             <Image
-              src="/bmaa-logo.jpeg"
+              src="/plague.jpeg"
               alt="BMAA Trophy Crest"
               fill
               sizes="(max-width: 1024px) 100vw, 40vw"
