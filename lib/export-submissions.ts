@@ -14,6 +14,8 @@ export interface ExportSubmissionItem {
   song_title: string;
   media_link: string;
   release_date: string;
+  photo_url?: string | null;
+  cover_art_url?: string | null;
   status: "pending" | "approved" | "rejected";
   rejection_reason?: string | null;
   submitted_at: string;
@@ -66,6 +68,8 @@ function prepareExportRows(items: ExportSubmissionItem[]) {
     Phone: item.phone,
     Location: item.location,
     "Media Link": item.media_link,
+    "Artist Photo URL": item.photo_url || "",
+    "Cover Art URL": item.cover_art_url || "",
     "Submitted At": formatDate(item.submitted_at),
     Instagram: item.instagram || "",
     Facebook: item.facebook || "",
@@ -127,6 +131,8 @@ export function exportSubmissionsToExcel(
     { wch: 16 }, // Phone
     { wch: 18 }, // Location
     { wch: 32 }, // Media Link
+    { wch: 35 }, // Artist Photo URL
+    { wch: 35 }, // Cover Art URL
     { wch: 20 }, // Submitted At
     { wch: 20 }, // Instagram
     { wch: 20 }, // Facebook
@@ -203,7 +209,18 @@ export function exportSubmissionsToPDF(
 
   // Prepare table headers & data
   const tableHeaders = [
-    ["Ref ID", "Stage Name", "Real Name", "Category", "Song Title", "Status", "Email", "Phone", "Submitted At"],
+    [
+      "Ref ID",
+      "Stage Name",
+      "Real Name",
+      "Category",
+      "Song Title",
+      "Status",
+      "Artist Photo URL",
+      "Cover Art URL",
+      "Media Link",
+      "Submitted At",
+    ],
   ];
 
   const tableData = items.map((item) => [
@@ -213,8 +230,9 @@ export function exportSubmissionsToPDF(
     item.category,
     item.song_title,
     item.status.toUpperCase(),
-    item.email,
-    item.phone,
+    item.photo_url || "",
+    item.cover_art_url || "",
+    item.media_link || "",
     formatDate(item.submitted_at),
   ]);
 
@@ -225,13 +243,14 @@ export function exportSubmissionsToPDF(
     startY: 35,
     margin: { left: 14, right: 14, top: 35, bottom: 15 },
     styles: {
-      fontSize: 8,
-      cellPadding: 2.5,
+      fontSize: 7.5,
+      cellPadding: 2,
       textColor: [230, 230, 230],
       fillColor: surfaceDark as [number, number, number],
       lineColor: borderBrown as [number, number, number],
       lineWidth: 0.2,
       font: "helvetica",
+      overflow: "linebreak",
     },
     headStyles: {
       fillColor: bgDark as [number, number, number],
@@ -244,15 +263,16 @@ export function exportSubmissionsToPDF(
       fillColor: [20, 14, 9],
     },
     columnStyles: {
-      0: { cellWidth: 24, fontStyle: "bold" }, // Ref ID
-      1: { cellWidth: 32 }, // Stage Name
-      2: { cellWidth: 32 }, // Real Name
-      3: { cellWidth: 42 }, // Category
-      4: { cellWidth: 36 }, // Song Title
-      5: { cellWidth: 20 }, // Status
-      6: { cellWidth: 42 }, // Email
-      7: { cellWidth: 24 }, // Phone
-      8: { cellWidth: 28 }, // Submitted At
+      0: { cellWidth: 20, fontStyle: "bold" }, // Ref ID
+      1: { cellWidth: 26 }, // Stage Name
+      2: { cellWidth: 24 }, // Real Name
+      3: { cellWidth: 32 }, // Category
+      4: { cellWidth: 26 }, // Song Title
+      5: { cellWidth: 16 }, // Status
+      6: { cellWidth: 32 }, // Artist Photo URL
+      7: { cellWidth: 32 }, // Cover Art URL
+      8: { cellWidth: 32 }, // Media Link
+      9: { cellWidth: 24 }, // Submitted At
     },
     didDrawPage: (data) => {
       // Footer page numbering
@@ -270,3 +290,4 @@ export function exportSubmissionsToPDF(
   const statusPart = filters?.statusFilter ? `_${filters.statusFilter}` : "";
   doc.save(`BMAA_Submissions${statusPart}_${getFileTimestamp()}.pdf`);
 }
+
