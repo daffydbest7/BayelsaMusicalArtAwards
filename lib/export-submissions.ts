@@ -56,27 +56,32 @@ function getFileTimestamp(): string {
 
 /** Map submissions to tabular rows */
 function prepareExportRows(items: ExportSubmissionItem[]) {
-  return items.map((item) => ({
-    "Reference ID": item.reference_id,
-    "Stage Name": item.stage_name,
-    "Real Name": item.real_name,
-    Category: item.category,
-    "Song Title": item.song_title,
-    "Release Date": item.release_date,
-    Status: item.status.toUpperCase(),
-    Email: item.email,
-    Phone: item.phone,
-    Location: item.location,
-    "Media Link": item.media_link,
-    "Artist Photo URL": item.photo_url || "",
-    "Cover Art URL": item.cover_art_url || "",
-    "Submitted At": formatDate(item.submitted_at),
-    Instagram: item.instagram || "",
-    Facebook: item.facebook || "",
-    TikTok: item.tiktok || "",
-    YouTube: item.youtube || "",
-    "Rejection Reason": item.rejection_reason || "",
-  }));
+  return items.map((item) => {
+    const photo = item.photo_url || (item as any).photo || (item as any).artist_photo || (item as any).artist_photo_url || "";
+    const cover = item.cover_art_url || (item as any).cover_art || (item as any).art_cover || (item as any).art_cover_url || "";
+
+    return {
+      "Reference ID": item.reference_id,
+      "Stage Name": item.stage_name,
+      "Real Name": item.real_name,
+      Category: item.category,
+      "Song Title": item.song_title,
+      "Release Date": item.release_date,
+      Status: item.status.toUpperCase(),
+      Email: item.email,
+      Phone: item.phone,
+      Location: item.location,
+      "Media Link": item.media_link,
+      "Artist Front Photo URL": photo,
+      "Art Cover URL": cover,
+      "Submitted At": formatDate(item.submitted_at),
+      Instagram: item.instagram || "",
+      Facebook: item.facebook || "",
+      TikTok: item.tiktok || "",
+      YouTube: item.youtube || "",
+      "Rejection Reason": item.rejection_reason || "",
+    };
+  });
 }
 
 /**
@@ -230,8 +235,8 @@ export function exportSubmissionsToPDF(
     item.category,
     item.song_title,
     item.status.toUpperCase(),
-    item.photo_url || "",
-    item.cover_art_url || "",
+    item.photo_url || (item as any).photo || (item as any).artist_photo || "",
+    item.cover_art_url || (item as any).cover_art || (item as any).art_cover || "",
     item.media_link || "",
     formatDate(item.submitted_at),
   ]);

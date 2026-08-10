@@ -19,10 +19,11 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   const headerList = await headers();
   const originalPath = headerList.get("x-admin-pathname") || "";
 
-  // Check if this is the login route
+  // Check if this is the login or reset-password route
   const isLoginRoute = originalPath.endsWith("/login");
+  const isResetPasswordRoute = originalPath.endsWith("/reset-password");
 
-  if (isLoginRoute) {
+  if (isLoginRoute || isResetPasswordRoute) {
     return <>{children}</>;
   }
 
