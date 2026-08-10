@@ -51,10 +51,10 @@ export async function GET() {
       timeCounts[dateStr] = (timeCounts[dateStr] || 0) + 1;
     });
 
-    // 2. Fetch total votes count
-    const { count: totalVotes, error: voteError } = await supabase
+    // 2. Fetch votes count and created_at timestamps for voting over time
+    const { data: voteData, count: totalVotesCount, error: voteError } = await supabase
       .from("votes")
-      .select("*", { count: "exact", head: true });
+      .select("created_at", { count: "exact" });
 
     if (voteError) {
       console.error("Dashboard vote fetch error:", voteError);
@@ -62,6 +62,16 @@ export async function GET() {
         { success: false, error: "Failed to fetch vote counts." },
         { status: 500 }
       );
+    }
+
+    const totalVotes = totalVotesCount || voteData?.length || 0;
+    const voteTimeCounts: Record<string, number> = {};
+
+    if (voteData) {
+      voteData.forEach((vote) => {
+        const dateStr = new Date(vote.created_at).toISOString().split("T")[0];
+        voteTimeCounts[dateStr] = (voteTimeCounts[dateStr] || 0) + 1;
+      });
     }
 
     // 3. Fetch Settings (auto-initialize row id=1 if missing)
@@ -99,6 +109,11 @@ export async function GET() {
       count: timeCounts[date],
     })).sort((a, b) => a.date.localeCompare(b.date)); // Sort chronologically
 
+    const voteTimeChartData = Object.keys(voteTimeCounts).map((date) => ({
+      date,
+      count: voteTimeCounts[date],
+    })).sort((a, b) => a.date.localeCompare(b.date)); // Sort chronologically
+
     return NextResponse.json({
       success: true,
       stats: {
@@ -106,10 +121,11 @@ export async function GET() {
         pendingCount,
         approvedCount,
         rejectedCount,
-        totalVotes: totalVotes || 0,
+        totalVotes,
       },
       categoryData: categoryChartData,
       timeData: timeChartData,
+      voteTimeData: voteTimeChartData,
       settings,
     });
   } catch (err: unknown) {

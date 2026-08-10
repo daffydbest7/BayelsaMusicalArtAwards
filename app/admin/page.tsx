@@ -16,6 +16,7 @@ export default async function AdminDashboardPage() {
   let totalVotes = 0;
   let categoryChartData: Array<{ name: string; submissions: number }> = [];
   let timeChartData: Array<{ date: string; count: number }> = [];
+  let voteTimeChartData: Array<{ date: string; count: number }> = [];
   let settings: any = {
     id: 1,
     submission_open_at: "2026-07-01T00:00:00Z",
@@ -66,12 +67,29 @@ export default async function AdminDashboardPage() {
         .sort((a, b) => a.date.localeCompare(b.date));
     }
 
-    // 3. Fetch total votes count
-    const { count: votesCount } = await supabase
+    // 3. Fetch votes data for total count and voting over time chart
+    const { data: voteData, count: votesCount } = await supabase
       .from("votes")
-      .select("*", { count: "exact", head: true });
-    
-    totalVotes = votesCount || 0;
+      .select("created_at", { count: "exact" });
+
+    if (voteData && voteData.length > 0) {
+      totalVotes = votesCount || voteData.length;
+      const voteTimeCounts: Record<string, number> = {};
+
+      voteData.forEach((vote) => {
+        const dateStr = new Date(vote.created_at).toISOString().split("T")[0];
+        voteTimeCounts[dateStr] = (voteTimeCounts[dateStr] || 0) + 1;
+      });
+
+      voteTimeChartData = Object.keys(voteTimeCounts)
+        .map((date) => ({
+          date,
+          count: voteTimeCounts[date],
+        }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+    } else {
+      totalVotes = votesCount || 0;
+    }
 
     // 4. Fetch Settings
     const { data: dbSettings } = await supabase
@@ -102,6 +120,7 @@ export default async function AdminDashboardPage() {
       initialStats={stats}
       initialCategoryData={categoryChartData}
       initialTimeData={timeChartData}
+      initialVoteTimeData={voteTimeChartData}
       initialSettings={settings}
     />
   );
