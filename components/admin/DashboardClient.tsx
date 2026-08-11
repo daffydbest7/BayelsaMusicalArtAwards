@@ -285,6 +285,51 @@ export function DashboardClient({
           </div>
         </div>
 
+        {/* Categories Bar Chart */}
+        <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4 lg:col-span-2">
+          <div>
+            <h3 className="font-heading text-base font-bold text-brand-white uppercase">Submissions by Category</h3>
+            <p className="font-sans text-[11px] text-brand-white/40">Which categories have the most traction</p>
+          </div>
+          <div className="h-72 w-full">
+            {initialCategoryData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={initialCategoryData.slice(0, 7)}
+                  layout="vertical"
+                  margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#25160d" />
+                  <XAxis type="number" stroke="#f5f1eb" fontSize={10} />
+                  <YAxis 
+                    dataKey="name" 
+                    type="category" 
+                    stroke="#f5f1eb" 
+                    fontSize={10} 
+                    width={100}
+                    tickFormatter={(val) => val.length > 15 ? `${val.substring(0, 15)}...` : val}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1a120c",
+                      borderColor: "#6c3c0a",
+                      borderRadius: "6px",
+                      color: "#f5f1eb",
+                      fontFamily: "var(--font-inter)",
+                      fontSize: "12px",
+                    }}
+                  />
+                  <Bar dataKey="submissions" name="Submissions" fill="#d2942e" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-xs text-brand-white/30 font-sans">
+                No category submissions to display yet.
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Voting Rate Line Chart */}
         <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4">
           <div>
@@ -330,50 +375,7 @@ export function DashboardClient({
           </div>
         </div>
 
-        {/* Categories Bar Chart */}
-        <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4 lg:col-span-2">
-          <div>
-            <h3 className="font-heading text-base font-bold text-brand-white uppercase">Submissions by Category</h3>
-            <p className="font-sans text-[11px] text-brand-white/40">Which categories have the most traction</p>
-          </div>
-          <div className="h-72 w-full">
-            {initialCategoryData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={initialCategoryData.slice(0, 7)}
-                  layout="vertical"
-                  margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#25160d" />
-                  <XAxis type="number" stroke="#f5f1eb" fontSize={10} />
-                  <YAxis 
-                    dataKey="name" 
-                    type="category" 
-                    stroke="#f5f1eb" 
-                    fontSize={10} 
-                    width={100}
-                    tickFormatter={(val) => val.length > 15 ? `${val.substring(0, 15)}...` : val}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1a120c",
-                      borderColor: "#6c3c0a",
-                      borderRadius: "6px",
-                      color: "#f5f1eb",
-                      fontFamily: "var(--font-inter)",
-                      fontSize: "12px",
-                    }}
-                  />
-                  <Bar dataKey="submissions" name="Submissions" fill="#d2942e" radius={[0, 4, 4, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="h-full flex items-center justify-center text-xs text-brand-white/30 font-sans">
-                No category submissions to display yet.
-              </div>
-            )}
-          </div>
-        </div>
+        
       </div>
     </div>
   );
