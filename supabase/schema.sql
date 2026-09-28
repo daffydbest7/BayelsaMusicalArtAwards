@@ -161,9 +161,9 @@ begin
   from votes
   where voter_fingerprint_hash = p_voter_fingerprint_hash
     and category = p_category
-    and created_at > now() - interval '24 hours';
+    and created_at > now() - interval '1 hour';
 
-  if v_count >= 2 then
+  if v_count >= 1 then
     return jsonb_build_object('success', false, 'reason', 'limit_reached', 'votes_used', v_count);
   end if;
 
@@ -171,6 +171,6 @@ begin
   insert into votes (submission_id, category, voter_fingerprint_hash, ip_address)
   values (p_submission_id, p_category, p_voter_fingerprint_hash, p_ip_address);
 
-  return jsonb_build_object('success', true, 'votes_remaining', 1 - v_count);
+  return jsonb_build_object('success', true, 'votes_remaining', 0 - v_count);
 end;
 $$ language plpgsql security definer;

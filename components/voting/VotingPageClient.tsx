@@ -238,7 +238,7 @@ export function VotingPageClient({
           transition={{ delay: 0.1 }}
           className="font-sans text-xs text-brand-white/50 mt-2"
         >
-          Scroll through the categories and tap a nominee to cast your vote. You have 2 votes per category every 24 hours.
+          Scroll through the categories and tap a nominee to cast your vote. You have 1 vote per category every 24 hours.
         </motion.p>
 
         {/* Countdown to close */}
@@ -307,7 +307,7 @@ export function VotingPageClient({
               {/* Votes remaining indicator (§5.2) — shown after first vote */}
               {categoryVotesRemaining[section.slug] !== undefined && (
                 <span className="font-mono text-[10px] text-brand-status-pending bg-brand-status-pending/10 border border-brand-status-pending/20 px-2.5 py-1 rounded-full">
-                  {categoryVotesRemaining[section.slug]}/2 votes left
+                  {categoryVotesRemaining[section.slug]}/1 vote left
                 </span>
               )}
             </div>

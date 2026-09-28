@@ -186,7 +186,7 @@ export function VoteModal({ nominee, onClose, onVoteSuccess }: VoteModalProps) {
                 </div>
 
                 <p className="font-sans text-xs text-brand-white/50 text-center">
-                  You are about to cast a vote. You have a maximum of 2 votes per category per 24 hours.
+                  You are about to cast a vote. You have a maximum of 1 vote per category per 24 hours.
                 </p>
 
                 {/* Bot Check Widget */}
@@ -225,7 +225,7 @@ export function VoteModal({ nominee, onClose, onVoteSuccess }: VoteModalProps) {
                     Your vote for <span className="text-brand-gold font-semibold">{nominee.stage_name}</span> has been recorded.
                   </p>
                   <p className="font-mono text-xs text-brand-status-pending font-semibold">
-                    {votesRemaining} of 2 votes remaining for this category today
+                    {votesRemaining} of 1 vote remaining for this category today
                   </p>
                 </div>
                 <button
