@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Vote, Clock, Trophy, CheckCircle, ShieldAlert, RotateCcw } from "lucide-react";
 import { Countdown } from "@/components/site/Countdown";
 import { VoteModal } from "@/components/voting/VoteModal";
-import type { PublicNominee } from "@/app/(public)/voting/page";
+import type { PublicNominee } from "@/app/(public)/page";
 import { checkBrowserGate, BrowserGateResult } from "@/lib/browser-gate";
 import { Footer } from "@/components/site/Footer";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
@@ -254,7 +254,7 @@ export function VotingPageClient({
       </div>
 
       {/* Sticky Category Chip Bar — jump-navigation, not a filter (§5.2) */}
-      <div className="sticky top-16 z-30 bg-brand-bg/95 backdrop-blur-sm border-b border-brand-brown-deep/30 shadow-lg shadow-black/20">
+      <div id="categories" className="sticky top-16 z-30 bg-brand-bg/90 backdrop-blur-md border-b border-brand-brown-deep/30 shadow-lg shadow-black/20">
         <div
           ref={chipBarRef}
           className="flex gap-2 px-4 py-3 overflow-x-auto scrollbar-hide max-w-7xl mx-auto"
