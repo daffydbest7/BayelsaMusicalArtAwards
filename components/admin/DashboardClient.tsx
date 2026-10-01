@@ -240,6 +240,50 @@ export function DashboardClient({
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
+         {/* Voting Rate Line Chart */}
+        <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4">
+          <div>
+            <h3 className="font-heading text-base font-bold text-brand-white uppercase">Voting Over Time</h3>
+            <p className="font-sans text-[11px] text-brand-white/40">Daily volume of cast votes</p>
+          </div>
+          <div className="h-72 w-full">
+            {initialVoteTimeData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={initialVoteTimeData}
+                  margin={{ top: 5, right: 10, left: 5, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#25160d" />
+                  <XAxis dataKey="date" stroke="#f5f1eb" fontSize={10} />
+                  <YAxis stroke="#f5f1eb" fontSize={10} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1a120c",
+                      borderColor: "#6c3c0a",
+                      borderRadius: "6px",
+                      color: "#f5f1eb",
+                      fontFamily: "var(--font-inter)",
+                      fontSize: "12px",
+                    }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="count" 
+                    name="Votes"
+                    stroke="#22c55e" 
+                    strokeWidth={2.5} 
+                    dot={{ fill: "#6c3c0a", stroke: "#22c55e", strokeWidth: 1.5 }}
+                    activeDot={{ r: 6 }} 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-xs text-brand-white/30 font-sans">
+                No daily voting history to display yet.
+              </div>
+            )}
+          </div>
+        </div>
         {/* Submissions Rate Line Chart */}
         <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4">
           <div>
@@ -330,50 +374,7 @@ export function DashboardClient({
           </div>
         </div>
 
-        {/* Voting Rate Line Chart */}
-        <div className="bg-brand-surface p-6 rounded-md border border-brand-brown-deep shadow-lg shadow-black/40 flex flex-col gap-4">
-          <div>
-            <h3 className="font-heading text-base font-bold text-brand-white uppercase">Voting Over Time</h3>
-            <p className="font-sans text-[11px] text-brand-white/40">Daily volume of cast votes</p>
-          </div>
-          <div className="h-72 w-full">
-            {initialVoteTimeData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  data={initialVoteTimeData}
-                  margin={{ top: 5, right: 10, left: 5, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#25160d" />
-                  <XAxis dataKey="date" stroke="#f5f1eb" fontSize={10} />
-                  <YAxis stroke="#f5f1eb" fontSize={10} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#1a120c",
-                      borderColor: "#6c3c0a",
-                      borderRadius: "6px",
-                      color: "#f5f1eb",
-                      fontFamily: "var(--font-inter)",
-                      fontSize: "12px",
-                    }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="count" 
-                    name="Votes"
-                    stroke="#22c55e" 
-                    strokeWidth={2.5} 
-                    dot={{ fill: "#6c3c0a", stroke: "#22c55e", strokeWidth: 1.5 }}
-                    activeDot={{ r: 6 }} 
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="h-full flex items-center justify-center text-xs text-brand-white/30 font-sans">
-                No daily voting history to display yet.
-              </div>
-            )}
-          </div>
-        </div>
+       
 
         
       </div>
