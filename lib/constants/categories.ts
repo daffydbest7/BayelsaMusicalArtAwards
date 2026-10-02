@@ -13,6 +13,8 @@ export const CATEGORIES = [
   "Best DJ",
   "Afrobeats Song of the Year",
   "Best Rap Artist",
+  "Best New Rap Act",
+  "Best Rap Song",
   "Best Rap Album",
   "Best Gospel Act",
   "Best Gospel Song",
@@ -21,9 +23,11 @@ export const CATEGORIES = [
   "Best Gospel Choir",
   "Best Owigiri Artist",
   "Best Owigiri Song",
+  "Best Owigiri Pop Song",
   "Best Owigiri Pop Artist",
   "Best Campus Act",
   "Hypeman of the Year",
+  "Rookie of the Year",
   "Best Bayelsa Artist in the Diaspora",
 ] as const;
 

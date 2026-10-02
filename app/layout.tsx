@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "BMAA 2026",
     type: "website",
     locale: "en_NG",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://bmaa2026.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.bmaaofficial.com",
   },
   twitter: {
     card: "summary_large_image",
